@@ -2,10 +2,10 @@
 Usage:
   # From tensorflow/models/
   # Create train data:
-  python generate_tfrecord.py --csv_input=data/train_labels.csv  --output_path=train.record
+    py generate_tfrecord.py --csv_input=images\train_labels.csv --image_dir=images\3x1_blue_flat_lego_piece_ --output_path=images\train.record
 
   # Create test data:
-  python generate_tfrecord.py --csv_input=data/test_labels.csv  --output_path=test.record
+  py generate_tfrecord.py --csv_input=images\test_labels.csv --image_dir=images\3x1_blue_flat_lego_piece --output_path=images\test.record
 """
 from __future__ import division
 from __future__ import print_function
@@ -14,7 +14,10 @@ from __future__ import absolute_import
 import os
 import io
 import pandas as pd
-import tensorflow as tf
+
+import tensorflow.compat.v1 as tf
+tf.disable_v2_behavior()
+
 
 from PIL import Image
 from object_detection.utils import dataset_util
@@ -28,9 +31,12 @@ FLAGS = flags.FLAGS
 
 
 # TO-DO replace this with label map
+##### CHANGE THIS #####
 def class_text_to_int(row_label):
-    if row_label == 'raccoon':
+    if row_label == 'car':
         return 1
+    elif row_label == 'human':
+        return 2
     else:
         None
 
